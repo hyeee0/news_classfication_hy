@@ -18,21 +18,21 @@ df_title = pd.DataFrame()
 
 for i in range(0, 6): #세션
     titles = []
-    for j in range(1, 11): #페이지
+    for j in range(1, pages[i]): #페이지
         url = 'https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=10{}#&date=%2000:00:00&page={}'.format(i, j)
         driver.get(url)
-        time.sleep(0.5)
+        time.sleep(1)
         for k in range(1, 5): #x_path
             for l in range(1, 6): #x_path
                 x_path = '//*[@id="section_body"]/ul[{}]/li[{}]/dl/dt[2]/a'.format(k, l)
                 try:
                     title = driver.find_element('xpath', x_path).text
-                    title = re.compile('[^가-힣]' ).sub(' ', title)
+                    title = re.compile('[^가-힣 ]').sub(' ', title)
                     titles.append(title)
                 except NoSuchElementException as e:
                     x_path = '//*[@id="section_body"]/ul[{}]/li[{}]/dl/dt/a'.format(k, l)
                     title = driver.find_element('xpath', x_path).text
-                    title = re.compile('[^가-힣]' ).sub(' ', title)
+                    title = re.compile('[^가-힣]').sub(' ', title)
                     titles.append(title)
                 except:
                     print('error', i, j, k, l)
