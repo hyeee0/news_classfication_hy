@@ -36,7 +36,7 @@ for i in range(len(X)):
         print()
 
 stopwords = pd.read_csv('./stopwords.csv', index_col=0)
-for j in range(len(X)): # 2글자 이상한 출력
+for j in range(len(X)): # 2글자 이상만 출력
     words = []
     for i in range(len(X[j])):
         if len(X[j][i]) > 1:
