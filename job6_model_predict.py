@@ -9,7 +9,9 @@ from keras.utils import to_categorical
 import pickle
 from keras.models import load_model
 
-df = pd.read_csv('./crawling_data/naver_headline_news_20221125.csv')
+pd.set_option('display.unicode.east_asian_width', True)
+pd.set_option('display.max_columns', 15)
+df = pd.read_csv('./crawling_data/naver_headline_news_20221128.csv')
 print(df.head())
 df.info()
 
@@ -51,3 +53,14 @@ for pred in preds:
 df['predict'] = category_preds
 
 print(df.head(30))
+
+df['OX'] = False
+for i in range(len(df)):
+    if df.loc[i, 'category'] == df.loc[i, 'predict']:
+        df.loc[i, 'OX'] = True
+
+df.info()
+print(df.head(30))
+print(df['OX'].value_counts())
+print(df['OX'].mean()) # 평균값을 보면 정답률이 된다
+print(df.loc[df['OX']==False])
